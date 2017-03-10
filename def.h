@@ -2,45 +2,44 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-class matr 
+// значения ключей для каждой из матриц
+enum type {USUAL, DIAGONAL};
+enum output {LINE_BY_LINE, BY_COLUMN, ONE_MASSIV};
+struct dv_massiv 
 {
-public:
-    static  matr* In(ifstream &ifst);	   
-    virtual void Read(ifstream &ifst) = 0;  // ввод
-    virtual void Write(ofstream &ofst) = 0;     // вывод
-};
-class dv_massiv: public matr 
-{
-private:
+	type key;
 	int n;
-	int **A; 
-public:
-	void Read(ifstream &ifst);
-	void Write(ofstream &ofst);
-	dv_massiv() {};
+	int **A;
+	output outm;
 };
-struct diagonal_matr: public matr
+struct diagonal_matr
 {
-private:
+	type key;
 	int n;
-	int *A; 
-public:
-	void Read(ifstream &ifst);
-	void Write(ofstream &ofst);
-	diagonal_matr() {};
- };
-class container
+	int *A;
+	output outm;
+};
+struct matr 
 {
-private:
-   //lst *list;
-	matr *cont;
-   container *next; // указатель на следующий элемент
-   container *prev;
+    type key; // ключ
+};
+struct container
+{
+   matr *cont;
    int len;
-public:
-	void In(ifstream &ifst);     // ввод 
-    void Out(ofstream &ofst);    // вывод 
-    void Clear();  // очистка контейнера от фигур
-    container();    // инициализация контейнера
-    ~container() {Clear();} // утилизация контейнера
+   struct container *next; // указатель на следующий элемент
+   struct container *prev; // указатель на предыдущий элемент
 };
+void In_Mas(dv_massiv* &mas, ifstream &ifst);
+void In_Diagonal(diagonal_matr* &mas,ifstream &ifst);
+void Out_mas(dv_massiv* &mas, ofstream &ofst);
+void Out_diagonal(diagonal_matr* &mas, ofstream &ofst);
+int Sum_Diagonal(diagonal_matr* &mas);
+int Sum_mas(dv_massiv* &mas);
+int Sum(matr *mas);
+matr* ReadM(ifstream& ifst);
+void OutM(matr *mas, ofstream &ofst);
+struct container * init();
+void Clear(container* &c);
+int In(container* &c, ifstream &ifst);
+void Out(container* &c, ofstream &ofst, int len);
