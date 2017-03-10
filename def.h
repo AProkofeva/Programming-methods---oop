@@ -9,6 +9,7 @@ public:
     virtual void Read(ifstream &ifst) = 0;  // ввод
     virtual void Write(ofstream &ofst) = 0;     // вывод
 	virtual int Sum() = 0;
+	bool Compare (matr *next);
 };
 class dv_massiv: public matr 
 {
@@ -43,6 +44,7 @@ private:
 public:
 	void In(ifstream &ifst);     // ввод 
     void Out(ofstream &ofst);    // вывод 
+	void Sort();
     void Clear();  // очистка контейнера от фигур
     container();    // инициализация контейнера
     ~container() {Clear();} // утилизация контейнера

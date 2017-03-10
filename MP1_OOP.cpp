@@ -27,6 +27,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	c.In(ifst);
     ofst << "Filled container. " << endl;
 	c.Out(ofst);
+	ofst << "Sorted container. " << endl;
+	c.Sort();
+	c.Out(ofst);
 	c.Clear();
     ofst << "Empty container. " << endl;
 	c.Out(ofst);

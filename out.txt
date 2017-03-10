@@ -16,5 +16,23 @@ Matrix:
 0	2	0	
 0	0	3	
 Sum of elements = 6
+Sorted container. 
+Container contains 3 elements.
+1: It is a usual square matrix! Number of rows (columns) = 2
+Matrix:
+1	1	
+1	1	
+Sum of elements = 4
+2: It is diagonal matrix! Number of rows (columns) = 3
+Matrix:
+1	0	0	
+0	2	0	
+0	0	3	
+Sum of elements = 6
+3: It is diagonal matrix! Number of rows (columns) = 2
+Matrix:
+3	0	
+0	4	
+Sum of elements = 7
 Empty container. 
 Container contains 0 elements.

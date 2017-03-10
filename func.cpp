@@ -161,3 +161,39 @@ void container::Out(ofstream &ofst)
 		schet++; 
 	} 
 }
+bool matr::Compare(matr *next)
+{
+	int s = Sum();
+	int sk = next->Sum();
+	return (s>sk);
+}
+void container :: Sort()
+{
+	container *p= this;
+	bool flag;
+	do
+	{
+		flag = false;
+		for( int i = 0; i < len-1; i++)
+				p = p ->prev;
+		while (p->next != NULL)
+		{
+			matr *one;
+			one = p->cont;
+			p = p->next;
+			matr *two;
+			two = p->cont;
+			bool k = one->Compare(two);
+			if (k == true)
+			{
+				p->cont = one;
+				p = p->prev;
+				p->cont = two;
+				flag = true;
+			}
+			else
+				p = p->prev;
+			p = p->next; // переход к следующему узлу
+		}
+	} while (flag);
+}
