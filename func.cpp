@@ -26,6 +26,15 @@ void diagonal_matr :: Read(ifstream &ifst)
 		ifst >> A[i];
 	}
 }
+void triangle_matr :: Read(ifstream &ifst) 
+{
+	ifst >> n;
+	A = new int [n];
+	for( int i = 0; i < n; i++)
+	{
+		ifst >> A[i];
+	}
+}
 void dv_massiv :: Write(ofstream &ofst)
 {
 	ofst << "It is a usual square matrix! Number of rows (columns) = " << n << endl << "Matrix:" << endl;
@@ -49,6 +58,24 @@ void diagonal_matr :: Write (ofstream &ofst)
 		ofst << endl;
 	}
 }
+void triangle_matr :: Write (ofstream &ofst)
+{
+	int len = (-1+ sqrt(float(1+8*n)))/2;
+	ofst << "It is low triangle matrix! Number of rows (columns) = " << len << endl << "Matrix:" << endl;
+	int k = 0;
+	for (int i = 0; i < len; i++)
+	{
+		for (int j = 0; j < len; j++)
+			if (i >= j)
+			{
+				ofst << A[k] << '\t';
+				k++;
+			}
+			else
+				ofst << "0\t";
+		ofst << endl;
+	}
+}
 matr* matr::In(ifstream& ifst)
 {
 	matr *matrix;
@@ -65,6 +92,11 @@ matr* matr::In(ifstream& ifst)
 		case 2:
 		{
 			matrix = new dv_massiv;
+			break;
+		}
+		case 3:
+		{
+			matrix = new triangle_matr;
 			break;
 		}
 		default:

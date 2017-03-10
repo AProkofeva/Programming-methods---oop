@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 using namespace std;
 class matr 
 {
@@ -19,7 +20,7 @@ public:
 	void Write(ofstream &ofst);
 	dv_massiv() {};
 };
-struct diagonal_matr: public matr
+class diagonal_matr: public matr
 {
 private:
 	int n;
@@ -28,6 +29,16 @@ public:
 	void Read(ifstream &ifst);
 	void Write(ofstream &ofst);
 	diagonal_matr() {};
+ };
+class triangle_matr: public matr
+{
+private:
+	int n;
+	int *A; 
+public:
+	void Read(ifstream &ifst);
+	void Write(ofstream &ofst);
+	triangle_matr() {};
  };
 class container
 {
