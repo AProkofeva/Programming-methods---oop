@@ -27,6 +27,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	c.In(ifst);
     ofst << "Filled container. " << endl;
 	c.Out(ofst);
+	ofst << "Only usual matrix. " << endl;
+	c.OutFirst(ofst);
 	c.Clear();
     ofst << "Empty container. " << endl;
 	c.Out(ofst);

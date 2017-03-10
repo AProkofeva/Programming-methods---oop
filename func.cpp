@@ -36,6 +36,13 @@ void dv_massiv :: Write(ofstream &ofst)
 		ofst << endl;
 	}
 }
+void dv_massiv ::WriteFirst(ofstream &ofst)
+{
+	Write(ofst);
+}
+void diagonal_matr ::WriteFirst(ofstream &ofst)
+{
+}
 void diagonal_matr :: Write (ofstream &ofst)
 {
 	ofst << "It is diagonal matrix! Number of rows (columns) = " << n << endl << "Matrix:" << endl;
@@ -88,8 +95,8 @@ void container:: Clear()
 	cur = cur->next;
 	while (cur!=NULL) //Пока по адресу на начало списка что-то есть
     {
-		container *temp = cur->next ;
-		temp->prev = cur->prev;
+		container *temp = cur->prev ;
+		temp->next = cur->next;
 		delete cur; // освобождаем память удаляемого элемента
 		cur = temp;
     }
@@ -135,5 +142,21 @@ void container::Out(ofstream &ofst)
 		ofst << schet << ": ";
 		p->cont->Write(ofst); // вывод значения элемента p
 		p = p->next; // переход к следующему узлу
+		schet++;
 	} 
+}
+void container::OutFirst(ofstream &ofst)
+{
+	container *p = this;
+	for( int i = 0; i < len-1; i++)
+			p = p ->prev;
+	while((p != NULL)&&(len!=0))
+	{
+		p->cont->WriteFirst(ofst); // вывод значения элемента p
+		p = p->next; // переход к следующему узлу
+	} 
+}
+void matr ::WriteFirst(ofstream &ofst) 
+{
+	ofst << endl;  // пустая строка
 }

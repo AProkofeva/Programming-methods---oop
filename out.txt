@@ -1,0 +1,22 @@
+Filled container. 
+Container contains 3 elements.
+1: It is diagonal matrix! Number of rows (columns) = 2
+Matrix:
+3	0	
+0	4	
+2: It is a usual square matrix! Number of rows (columns) = 2
+Matrix:
+1	1	
+1	1	
+3: It is diagonal matrix! Number of rows (columns) = 3
+Matrix:
+1	0	0	
+0	2	0	
+0	0	3	
+Only usual matrix. 
+It is a usual square matrix! Number of rows (columns) = 2
+Matrix:
+1	1	
+1	1	
+Empty container. 
+Container contains 0 elements.
