@@ -49,6 +49,27 @@ void diagonal_matr :: Write (ofstream &ofst)
 		ofst << endl;
 	}
 }
+int dv_massiv :: Sum()
+{
+	int sum = 0;
+	for( int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			sum = sum + A[i][j];
+		}
+	}
+	return sum;
+}
+int diagonal_matr :: Sum ()
+{
+	int sum = 0;
+	for (int i = 0; i < n; i++)
+	{
+		sum = sum + A[i];
+	}
+	return sum;
+}
 matr* matr::In(ifstream& ifst)
 {
 	matr *matrix;
@@ -134,6 +155,9 @@ void container::Out(ofstream &ofst)
 	{
 		ofst << schet << ": ";
 		p->cont->Write(ofst); // вывод значения элемента p
+		int sum = p->cont->Sum ();
+		ofst << "Sum of elements = " << sum << endl;
 		p = p->next; // переход к следующему узлу
+		schet++; 
 	} 
 }

@@ -8,6 +8,7 @@ public:
     static  matr* In(ifstream &ifst);	   
     virtual void Read(ifstream &ifst) = 0;  // ввод
     virtual void Write(ofstream &ofst) = 0;     // вывод
+	virtual int Sum() = 0;
 };
 class dv_massiv: public matr 
 {
@@ -17,9 +18,10 @@ private:
 public:
 	void Read(ifstream &ifst);
 	void Write(ofstream &ofst);
+	int Sum ();
 	dv_massiv() {};
 };
-struct diagonal_matr: public matr
+class diagonal_matr: public matr
 {
 private:
 	int n;
@@ -27,6 +29,7 @@ private:
 public:
 	void Read(ifstream &ifst);
 	void Write(ofstream &ofst);
+	int Sum ();
 	diagonal_matr() {};
  };
 class container
