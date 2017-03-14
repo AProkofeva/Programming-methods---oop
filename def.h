@@ -10,6 +10,7 @@ public:
     virtual void Write(ofstream &ofst) = 0;     // вывод
 	virtual int Sum() = 0;
 	bool Compare (matr *next);
+	virtual void WriteFirst(ofstream &ofst) = 0;
 };
 class dv_massiv: public matr 
 {
@@ -20,6 +21,7 @@ public:
 	void Read(ifstream &ifst);
 	void Write(ofstream &ofst);
 	int Sum ();
+	void WriteFirst(ofstream &ofst);
 	dv_massiv() {};
 };
 class diagonal_matr: public matr
@@ -31,6 +33,7 @@ public:
 	void Read(ifstream &ifst);
 	void Write(ofstream &ofst);
 	int Sum ();
+	void WriteFirst(ofstream &ofst);
 	diagonal_matr() {};
  };
 class container
@@ -45,6 +48,7 @@ public:
 	void In(ifstream &ifst);     // ввод 
     void Out(ofstream &ofst);    // вывод 
 	void Sort();
+	void OutFirst(ofstream &ofst);  
     void Clear();  // очистка контейнера от фигур
     container();    // инициализация контейнера
     ~container() {Clear();} // утилизация контейнера

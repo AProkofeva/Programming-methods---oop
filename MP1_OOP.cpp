@@ -30,6 +30,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	ofst << "Sorted container. " << endl;
 	c.Sort();
 	c.Out(ofst);
+	ofst << "Only usual matrix. " << endl;
+	c.OutFirst(ofst);
 	c.Clear();
     ofst << "Empty container. " << endl;
 	c.Out(ofst);
