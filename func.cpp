@@ -332,6 +332,7 @@ void container::OutFirst(ofstream &ofst)
 	container *p = this;
 	for( int i = 0; i < len-1; i++)
 			p = p ->prev;
+	int schet = 0;
 	while((p != NULL)&&(len!=0))
 	{
 		p->cont->WriteFirst(ofst); // вывод значения элемента p
