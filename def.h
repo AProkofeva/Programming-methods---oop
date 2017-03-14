@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 using namespace std;
 enum output {LINE_BY_LINE, BY_COLUMN, ONE_MASSIV};
 class matr 
@@ -37,6 +38,18 @@ public:
 	int Sum ();
 	void WriteFirst(ofstream &ofst);
 	diagonal_matr() {};
+ };
+class triangle_matr: public matr
+{
+private:
+	int n;
+	int *A; 
+public:
+	void Read(ifstream &ifst);
+	void Write(ofstream &ofst);
+	int Sum ();
+	void WriteFirst(ofstream &ofst);
+	triangle_matr() {};
  };
 class container
 {
