@@ -2,9 +2,11 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
+enum output {LINE_BY_LINE, BY_COLUMN, ONE_MASSIV};
 class matr 
 {
 public:
+	output outm;
     static  matr* In(ifstream &ifst);	   
     virtual void Read(ifstream &ifst) = 0;  // ввод
     virtual void Write(ofstream &ofst) = 0;     // вывод

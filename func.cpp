@@ -82,17 +82,55 @@ matr* matr::In(ifstream& ifst)
 	matr *matrix;
 	int key;
 	ifst >> key;
+	int outm;
+	ifst >> outm;
 	switch (key)
 	{
 		case 1:
 		{
 			matrix = new diagonal_matr;
+			switch(outm)
+			{
+				case 1:
+				{
+					matrix->outm = LINE_BY_LINE;
+					break;
+				}
+				case 2:
+				{
+					matrix->outm = BY_COLUMN;
+					break;
+				}
+				case 3:
+				{
+					matrix->outm = ONE_MASSIV;
+					break;
+				}
+			}
 			break;
 		}
 		
 		case 2:
 		{
 			matrix = new dv_massiv;
+			switch(outm)
+			{
+				case 1:
+				{
+					matrix->outm = LINE_BY_LINE;
+					break;
+				}
+				case 2:
+				{
+					matrix->outm = BY_COLUMN;
+					break;
+				}
+				case 3:
+				{
+					matrix->outm = ONE_MASSIV;
+					break;
+				}
+			}
 			break;
 		}
 		default:
@@ -160,7 +198,30 @@ void container::Out(ofstream &ofst)
 	int schet = 1;
 	while((p != NULL)&&(len!=0))
 	{
-		ofst << schet << ": ";
+		ofst << schet << ": " <<endl;
+		switch(p->cont->outm)
+		{
+			case LINE_BY_LINE:
+			{
+				ofst << "It is line by line method of output" << endl;
+				break;
+			}
+			case BY_COLUMN:
+			{
+				ofst << "It is method of output by columns" << endl;
+				break;
+			}
+			case ONE_MASSIV:
+			{
+				ofst << "It is method of output in shape of one-dimensional massiv" << endl;
+				break;
+			}
+			default:
+			{
+				ofst << "It is incorrect way of output matrix!" <<endl;
+				break;
+			}
+		}
 		p->cont->Write(ofst); // вывод значения элемента p
 		int sum = p->cont->Sum ();
 		ofst << "Sum of elements = " << sum << endl;
@@ -213,6 +274,7 @@ void container::OutFirst(ofstream &ofst)
 	{
 		p->cont->WriteFirst(ofst); // вывод значения элемента p
 		p = p->next; // переход к следующему узлу
+		schet++;
 	} 
 }
 void matr ::WriteFirst(ofstream &ofst) 
