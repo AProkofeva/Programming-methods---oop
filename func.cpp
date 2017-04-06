@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "def.h"
 // значения ключей для каждой из матриц
 void dv_massiv ::Read(ifstream &ifst) 
