@@ -18,7 +18,12 @@ private Q_SLOTS:
     void testCompare_data();
     void testCompare();
     void testInit();
+    void testInDiagonal();
+    void testInTriangle();
+    void testInMas();
     void testIn();
+    void testInEmpty();
+    void testInOne();
     void testOut();
     void testOne();
     void testEmpty();
@@ -49,7 +54,6 @@ void Tst_oopTest::testMas_data()
 
 void Tst_oopTest::testMas()
 {
-    QVERIFY2(true, "Failure");
     QFETCH(int, size);
     QFETCH(int, first);
     QFETCH(int, expected);
@@ -64,18 +68,12 @@ void Tst_oopTest::testMas()
     {
         mas->A[i]=new int[mas->n];
     }
-   /* int mas2[6][6]={{1,2,3,4,5,6},
-                    {2,2,2,2,2,2},
-                    {6,6,4,4,2,2},
-                    {2,2,3,3,0,4},
-                    {6,2,4,1,4,3},
-                    {1,2,2,1,1,2}};*/
     int k = 0;
     for (int i = 0; i <mas->n; ++i)
     {
         for(int j = 0; j<mas->n; ++j)
         {
-            mas->A[i][j]= first + k;//mas2[i][j];
+            mas->A[i][j]= first + k;
             k++;
         }
     }
@@ -99,7 +97,6 @@ void Tst_oopTest::testDiagonal_data()
 }
 void Tst_oopTest::testDiagonal()
 {
-    QVERIFY2(true, "Failure");
     QFETCH(int, size);
     QFETCH(int, first);
     QFETCH(int, expected);
@@ -136,7 +133,6 @@ void Tst_oopTest::testTriangle_data()
 }
 void Tst_oopTest::testTriangle()
 {
-    QVERIFY2(true, "Failure");
     QFETCH(int, size);
     QFETCH(int, first);
     QFETCH(int, expected);
@@ -171,7 +167,6 @@ void Tst_oopTest::testCompare_data()
 }
 void Tst_oopTest::testCompare()
 {
-    QVERIFY2(true, "Failure");
     QFETCH(int, size_usual);
     QFETCH(int, size_diagonal);
     QFETCH(int, size_triangle);
@@ -225,7 +220,6 @@ void Tst_oopTest::testCompare()
 }
 void Tst_oopTest::testInit()
 {
-    QVERIFY2(true, "Failure");
     container c;
     int actualLen = c.len;
     int expectedLen = 0;
@@ -240,47 +234,153 @@ void Tst_oopTest::testInit()
     container* expected2 = NULL;
     QCOMPARE(actual2, expected2);
 }
+void Tst_oopTest::testInDiagonal()
+{
+    FILE *fp = fopen("in_diagonal.txt","r");
+    ifstream ifst(fp);
+    matr * temp = matr::In(ifst);
+    diagonal_matr *actualHead;
+    actualHead = (diagonal_matr*)temp;
+    diagonal_matr *expectedHead;
+    expectedHead = new diagonal_matr;
+    expectedHead->n = 3;
+    expectedHead->A = new int[expectedHead->n];
+    int mas2[3] = {4, 3, 5};
+    for (int i = 0; i <expectedHead->n; ++i)
+    {
+        expectedHead->A[i]= mas2[i];
+    }
+    for (int i = 0; i< expectedHead->n; ++i)
+    {
+        QCOMPARE(actualHead->A[i], expectedHead->A[i]);
+    }
+    fclose(fp);
+}
+void Tst_oopTest::testInMas()
+{
+    FILE *fp = fopen("in_mas.txt","r");
+    ifstream ifst(fp);
+    matr * temp = matr::In(ifst);
+    dv_massiv *actualHead;
+    actualHead = (dv_massiv*)temp;
+    dv_massiv *expectedHead;
+    expectedHead = new dv_massiv;
+    expectedHead->n = 3;
+    expectedHead->A = new int*[expectedHead->n];
+    for (int i = 0; i < expectedHead->n; i++)
+    {
+        expectedHead->A[i] = new int[expectedHead->n];
+    }
+    int mas2[3][3]={{12,45,78},
+                    {23,56,89},
+                    {87,54,21}};
+    for (int i = 0; i <expectedHead->n; ++i)
+    {
+        for (int j =0; j< expectedHead->n; ++j)
+        {
+            expectedHead->A[i][j]= mas2[i][j];
+        }
+    }
+    for (int i = 0; i< expectedHead->n; ++i)
+    {
+        for (int j = 0; j <expectedHead->n; ++j)
+        {
+            QCOMPARE(actualHead->A[i][j], expectedHead->A[i][j]);
+        }
+    }
+    fclose(fp);
+}
+void Tst_oopTest::testInTriangle()
+{
+    FILE *fp = fopen("in_triangle.txt","r");
+    ifstream ifst(fp);
+    matr * temp = matr::In(ifst);
+    triangle_matr *actualHead;
+    actualHead = (triangle_matr*)temp;
+    triangle_matr *expectedHead;
+    expectedHead = new triangle_matr;
+    expectedHead->n = 6;
+    expectedHead->A = new int[expectedHead->n];
+    int mas2[6] = {1, 2, 3, 4, 5, 6};
+    for (int i = 0; i <expectedHead->n; ++i)
+    {
+        expectedHead->A[i]= mas2[i];
+    }
+    for (int i = 0; i< expectedHead->n; ++i)
+    {
+        QCOMPARE(actualHead->A[i], expectedHead->A[i]);
+    }
+    fclose(fp);
+}
 void Tst_oopTest::testIn()
 {
-    container c;
-    FILE *fp = fopen("in.txt","r");
+    container *c;
+    c = new container;
+    FILE *fp = fopen("in1.txt","r");
     ifstream ifst(fp);
-    c.In(ifst);
-    int actuallen = c.len;
-    int expectedlen = 6;
+    c->In(ifst);
+    int actuallen = c->len;
+    int expectedlen = 5;
     QCOMPARE(actuallen, expectedlen);
-    matr* actualHead = c.cont;
-    matr *expectedHead;
-    diagonal_matr *mas;
-    mas = new diagonal_matr;
-    mas->outm = ONE_MASSIV;
-    mas->n = 3;
-    mas->A = new int[mas->n];
-
-    /*int mas2[6][6]={{1,2,3,4,5,6},
-                    {2,2,2,2,2,2},
-                    {6,6,4,4,2,2},
-                    {2,2,3,3,0,4},
-                    {6,2,4,1,4,3},
-                    {1,2,2,1,1,2}};*/
-    int mas2[3] = {4, 3, 5};
-    for (int i = 0; i <mas->n; ++i)
+    container *p;
+    p = c;
+    output expected[5] = {LINE_BY_LINE, BY_COLUMN, ONE_MASSIV,ONE_MASSIV,ONE_MASSIV};
+    for( int i = 0; i < actuallen-1; i++)
+            p = p ->prev;
+    int count = 0;
+    while (p != NULL)
     {
-        mas->A[i]= mas2[i];
+        matr* actual = p->cont;
+        QCOMPARE(actual->outm, expected[count]);
+        count++;
+        p = p->next;
     }
-    expectedHead = (matr*)mas;
-    QCOMPARE(actualHead, expectedHead);
+    fclose(fp);
+}
+void Tst_oopTest::testInEmpty()
+{
+    container *c;
+    c = new container;
+    FILE *fp = fopen("in_empty.txt","r");
+    ifstream ifst(fp);
+    c->In(ifst);
+    int actuallen = c->len;
+    int expectedlen = 0;
+    QCOMPARE(actuallen, expectedlen);
+    matr* actual = c->cont;
+    matr* expected = NULL;
+    QCOMPARE(actual, expected);
+    container* actual1 = c->prev;
+    container* expected1 = NULL;
+    QCOMPARE(actual1, expected1);
+    container* actual2 = c->next;
+    container* expected2 = NULL;
+    QCOMPARE(actual2, expected2);
+    fclose(fp);
+}
+void Tst_oopTest::testInOne()
+{
+    container *c;
+    c = new container;
+    FILE *fp = fopen("in_one.txt","r");
+    ifstream ifst(fp);
+    c->In(ifst);
+    int actuallen = c->len;
+    int expectedlen = 1;
+    QCOMPARE(actuallen, expectedlen);
+    output expected = BY_COLUMN;
+    matr* actual = c->cont;
+    QCOMPARE(actual->outm, expected);
+    fclose(fp);
 }
 void Tst_oopTest::testOut()
 {
-    QVERIFY2(true, "Failure");
     container c;
     FILE *fp = fopen("in.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("out.txt","w");
     ofstream ofst(fn);
     c.In(ifst);
-    int actuallen = c.len;
     c.Out(ofst);
     fclose(fn);
     fclose(fp);
@@ -301,14 +401,12 @@ void Tst_oopTest::testOut()
 }
 void Tst_oopTest::testOne()
 {
-    QVERIFY2(true, "Failure");
     container c;
     FILE *fp = fopen("in_one.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("out1.txt","w");
     ofstream ofst(fn);
     c.In(ifst);
-    int actuallen = c.len;
     c.Out(ofst);
     fclose(fn);
     fclose(fp);
@@ -329,14 +427,12 @@ void Tst_oopTest::testOne()
 }
 void Tst_oopTest::testEmpty()
 {
-    QVERIFY2(true, "Failure");
     container c;
     FILE *fp = fopen("in_empty.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("outemp.txt","w");
     ofstream ofst(fn);
     c.In(ifst);
-    int actuallen = c.len;
     c.Out(ofst);
     fclose(fn);
     fclose(fp);
@@ -357,7 +453,6 @@ void Tst_oopTest::testEmpty()
 }
 void Tst_oopTest::sortEmpty()
 {
-    QVERIFY2(true, "Failure");
     container c;
     FILE *fp = fopen("in_empty.txt","r");
     ifstream ifst(fp);
@@ -385,7 +480,6 @@ void Tst_oopTest::sortEmpty()
 }
 void Tst_oopTest::sortOne()
 {
-    QVERIFY2(true, "Failure");
     container c;
     FILE *fp = fopen("in_one.txt","r");
     ifstream ifst(fp);
@@ -413,7 +507,6 @@ void Tst_oopTest::sortOne()
 }
 void Tst_oopTest::sortList()
 {
-    QVERIFY2(true, "Failure");
     container c;
     FILE *fp = fopen("in.txt","r");
     ifstream ifst(fp);
@@ -441,7 +534,6 @@ void Tst_oopTest::sortList()
 }
 void Tst_oopTest::sortAssorted()
 {
-    QVERIFY2(true, "Failure");
     container c;
     FILE *fp = fopen("in_assort.txt","r");
     ifstream ifst(fp);
@@ -469,7 +561,6 @@ void Tst_oopTest::sortAssorted()
 }
 void Tst_oopTest::sortSort()
 {
-    QVERIFY2(true, "Failure");
     container c;
     FILE *fp = fopen("in2.txt","r");
     ifstream ifst(fp);
@@ -497,7 +588,6 @@ void Tst_oopTest::sortSort()
 }
 void Tst_oopTest::testClear()
 {
-    QVERIFY2(true, "Failure");
     container c;
     FILE *fp = fopen("in2.txt","r");
     ifstream ifst(fp);
