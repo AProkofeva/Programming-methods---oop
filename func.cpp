@@ -308,6 +308,11 @@ void container:: Clear()
 void container::In(ifstream &ifst)
 {
 	len = checkNumber(ifst, len);
+	if (len < 0)
+    {
+        cout << "Wrong count of elements ( must be > 0)!!!" << endl;
+        exit(1);
+    }
 	container *cur = this;
 	for(int i = 0; i <len; i++)
 	{
