@@ -1,8 +1,83 @@
+#include "stdafx.h"
 #include "def.h"
+
+void checkIn(ifstream &ifst)
+{
+	if(!ifst)
+	{
+		cout << "No input file found!" << endl;
+		exit(1);
+	}
+}
+void checkOut(ofstream &ofst)
+{
+	if(!ofst)
+	{
+		cout << "No output file found!" << endl;
+		exit(1);
+	}
+}
+int checkNumber(ifstream &ifst, int number)
+{
+	ifst >> number;
+	if (ifst.fail())
+    {
+        cout << "Wrong input! Your file must contain only numbers!" << endl;
+        exit(1);
+    }
+	if (( number < -1000 ) || (number > 1000))
+	{
+		 cout << "Wrong input! Your file contain large numbers!" << endl;
+		 exit(1);
+	}
+	return number;
+}
+void checkType(int number)
+{
+	int begin = 1;
+	int end = 3;
+	if (( number < begin ) || (number > end))
+    {
+        cout << "Wrong type!!! 1 - diagonal, 2 - square (usual), 3 - triangle matrix" << endl;
+		cout << "OR  1 - line by line, 2 - by column, 3 - like one-dimensional way output of matrix" << endl;
+        exit(1);
+    }
+}
+void checkSize(int size)
+{
+	if ((size < 2) || (size > 100))
+    {
+        cout << "Wrong size of matrix!!!" << endl;
+        exit(1);
+    }
+}
+void checkTriangleSize(int size)
+{
+	float sq = sqrt(float(1+8*size));
+	if ((sq - int(sq)) == 0)
+	{
+		float n = (-1+ sq)/2;
+		if ((n - int(n)) == 0)
+		{
+			return ;
+		}
+		else
+		{
+			cout << "Wrong size of triangle matrix!!!" << endl;
+			exit(1);
+		}
+	}
+	else
+	{
+		cout << "Wrong size of triangle matrix!!!" << endl;
+		exit(1);
+	}
+}
 // значения ключей для каждой из матриц
 void dv_massiv ::Read(ifstream &ifst) 
 {
-	ifst >> n;
+	n = checkNumber(ifst, n);
+	checkSize(n);
 	A = new int*[n];
 	for (int i = 0; i < n; ++i)
 	{
@@ -18,7 +93,8 @@ void dv_massiv ::Read(ifstream &ifst)
 } 
 void diagonal_matr :: Read(ifstream &ifst) 
 {
-	ifst >> n;
+	n = checkNumber(ifst, n);
+	checkSize(n);
 	A = new int [n];
 	for( int i = 0; i < n; i++)
 	{
@@ -27,7 +103,9 @@ void diagonal_matr :: Read(ifstream &ifst)
 }
 void triangle_matr :: Read(ifstream &ifst) 
 {
-	ifst >> n;
+	n = checkNumber(ifst, n);
+	checkSize(n);
+	checkTriangleSize(n);
 	A = new int [n];
 	for( int i = 0; i < n; i++)
 	{
@@ -118,10 +196,12 @@ void triangle_matr :: Write (ofstream &ofst)
 matr* matr::In(ifstream& ifst)
 {
 	matr *matrix;
-	int key;
-	ifst >> key;
-	int outm;
-	ifst >> outm;
+	int key = 0;
+	key = checkNumber(ifst, key);
+	checkType(key);
+	int outm = 0;
+	outm = checkNumber(ifst, outm);
+	checkType(outm);
 	switch (key)
 	{
 		case 1:
@@ -227,7 +307,7 @@ void container:: Clear()
 }
 void container::In(ifstream &ifst)
 {
-	ifst >> len;
+	len = checkNumber(ifst, len);
 	container *cur = this;
 	for(int i = 0; i <len; i++)
 	{

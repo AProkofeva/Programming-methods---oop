@@ -68,3 +68,9 @@ public:
     container();    // инициализация контейнера
     ~container() {Clear();} // утилизация контейнера
 };
+void checkIn(ifstream &ifst);
+void checkOut(ofstream &ofst);
+int checkNumber(ifstream &ifst, int number);
+void checkType(int number);
+void checkSize(int size);
+void checkTriangleSize(int size);
