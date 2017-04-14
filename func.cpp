@@ -1,26 +1,26 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "def.h"
 
-void checkIn(ifstream &ifst)
+void CheckIn(ifstream &inFile)
 {
-	if(!ifst)
+	if(!inFile)
 	{
 		cout << "No input file found!" << endl;
 		exit(1);
 	}
 }
-void checkOut(ofstream &ofst)
+void CheckOut(ofstream &outFile)
 {
-	if(!ofst)
+	if(!outFile)
 	{
 		cout << "No output file found!" << endl;
 		exit(1);
 	}
 }
-int checkNumber(ifstream &ifst, int number)
+int CheckNumber(ifstream &inFile, int number)
 {
-	ifst >> number;
-	if (ifst.fail())
+	inFile >> number;
+	if (inFile.fail())
     {
         cout << "Wrong input! Your file must contain only numbers!" << endl;
         exit(1);
@@ -32,7 +32,7 @@ int checkNumber(ifstream &ifst, int number)
 	}
 	return number;
 }
-void checkType(int number)
+void CheckType(int number)
 {
 	int begin = 1;
 	int end = 3;
@@ -43,7 +43,7 @@ void checkType(int number)
         exit(1);
     }
 }
-void checkSize(int size)
+void CheckSize(int size)
 {
 	if ((size < 2) || (size > 100))
     {
@@ -51,12 +51,12 @@ void checkSize(int size)
         exit(1);
     }
 }
-void checkTriangleSize(int size)
+void CheckTriangleSize(int size)
 {
-	float sq = sqrt(float(1+8*size));
+	float sq = sqrt(float(1 + 8 * size));
 	if ((sq - int(sq)) == 0)
 	{
-		float n = (-1+ sq)/2;
+		float n = ( -1 + sq)/2;
 		if ((n - int(n)) == 0)
 		{
 			return ;
@@ -74,78 +74,86 @@ void checkTriangleSize(int size)
 	}
 }
 // значения ключей для каждой из матриц
-void dv_massiv ::Read(ifstream &ifst) 
+void _usualMatr ::Read(ifstream &inFile)
 {
-	n = checkNumber(ifst, n);
-	checkSize(n);
+	n = CheckNumber(inFile, n);
+	CheckSize(n);
 	A = new int*[n];
 	for (int i = 0; i < n; ++i)
 	{
-		A[i]=new int[n];
+		A[i] = new int[n];
 	}
 	for( int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
 		{
-			ifst >> A[i][j];
+			inFile >> A[i][j];
 		}
 	}
 } 
-void diagonal_matr :: Read(ifstream &ifst) 
+void _diagonalMatr :: Read(ifstream &inFile)
 {
-	n = checkNumber(ifst, n);
-	checkSize(n);
+	n = CheckNumber(inFile, n);
+	CheckSize(n);
 	A = new int [n];
 	for( int i = 0; i < n; i++)
 	{
-		ifst >> A[i];
+		inFile >> A[i];
 	}
 }
-void triangle_matr :: Read(ifstream &ifst) 
+void _triangleMatr :: Read(ifstream &inFile)
 {
-	n = checkNumber(ifst, n);
-	checkSize(n);
-	checkTriangleSize(n);
+	n = CheckNumber(inFile, n);
+	CheckSize(n);
+	CheckTriangleSize(n);
 	A = new int [n];
 	for( int i = 0; i < n; i++)
 	{
-		ifst >> A[i];
+		inFile >> A[i];
 	}
 }
-void dv_massiv :: Write(ofstream &ofst)
+void _usualMatr :: Write(ofstream &outFile)
 {
-	ofst << "It is a usual square matrix! Number of rows (columns) = " << n << endl << "Matrix:" << endl;
+	outFile << "It is a usual square matrix! Number of rows (columns) = " << n << endl << "Matrix:" << endl;
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
-			ofst << A[i][j] << '\t';
-		ofst << endl;
+		{
+			outFile << A[i][j] << '\t';
+		}
+		outFile << endl;
 	}
 }
-void dv_massiv ::WriteFirst(ofstream &ofst)
+void _usualMatr ::WriteFirst(ofstream &outFile)
 {
-	Write(ofst);
+	Write(outFile);
 }
-void diagonal_matr ::WriteFirst(ofstream &ofst)
-{
-}
-void triangle_matr ::WriteFirst(ofstream &ofst)
+void _diagonalMatr ::WriteFirst(ofstream &outFile)
 {
 }
-void diagonal_matr :: Write (ofstream &ofst)
+void _triangleMatr ::WriteFirst(ofstream &outFile)
 {
-	ofst << "It is diagonal matrix! Number of rows (columns) = " << n << endl << "Matrix:" << endl;
+}
+void _diagonalMatr :: Write (ofstream &outFile)
+{
+	outFile << "It is diagonal matrix! Number of rows (columns) = " << n << endl << "Matrix:" << endl;
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
+		{
 			if (i == j)
-				ofst << A[i] << '\t';
+			{
+				outFile << A[i] << '\t';
+			}
 			else
-				ofst << "0\t";
-		ofst << endl;
+			{
+				outFile << "0\t";
+			}
+		}
+		outFile << endl;
 	}
 }
-int dv_massiv :: Sum()
+int _usualMatr :: Sum()
 {
 	int sum = 0;
 	for( int i = 0; i < n; i++)
@@ -157,7 +165,7 @@ int dv_massiv :: Sum()
 	}
 	return sum;
 }
-int diagonal_matr :: Sum ()
+int _diagonalMatr :: Sum ()
 {
 	int sum = 0;
 	for (int i = 0; i < n; i++)
@@ -166,7 +174,7 @@ int diagonal_matr :: Sum ()
 	}
 	return sum;
 }
-int triangle_matr :: Sum ()
+int _triangleMatr :: Sum ()
 {
 	int sum = 0;
 	for (int i = 0; i < n; i++)
@@ -175,38 +183,42 @@ int triangle_matr :: Sum ()
 	}
 	return sum;
 }
-void triangle_matr :: Write (ofstream &ofst)
+void _triangleMatr :: Write (ofstream &outFile)
 {
-	int len = (-1+ sqrt(float(1+8*n)))/2;
-	ofst << "It is low triangle matrix! Number of rows (columns) = " << len << endl << "Matrix:" << endl;
+	int len = ( -1 + sqrt(float( 1 + 8 * n)))/2;
+	outFile << "It is low triangle matrix! Number of rows (columns) = " << len << endl << "Matrix:" << endl;
 	int k = 0;
 	for (int i = 0; i < len; i++)
 	{
 		for (int j = 0; j < len; j++)
+		{
 			if (i >= j)
 			{
-				ofst << A[k] << '\t';
+				outFile << A[k] << '\t';
 				k++;
 			}
 			else
-				ofst << "0\t";
-		ofst << endl;
+			{
+				outFile << "0\t";
+			}
+		}
+		outFile << endl;
 	}
 }
-matr* matr::In(ifstream& ifst)
+_matr* _matr::In(ifstream& inFile)
 {
-	matr *matrix;
+	_matr *matrix;
 	int key = 0;
-	key = checkNumber(ifst, key);
-	checkType(key);
+	key = CheckNumber(inFile, key);
+	CheckType(key);
 	int outm = 0;
-	outm = checkNumber(ifst, outm);
-	checkType(outm);
+	outm = CheckNumber(inFile, outm);
+	CheckType(outm);
 	switch (key)
 	{
 		case 1:
 		{
-			matrix = new diagonal_matr;
+			matrix = new _diagonalMatr;
 			switch(outm)
 			{
 				case 1:
@@ -230,7 +242,7 @@ matr* matr::In(ifstream& ifst)
 		
 		case 2:
 		{
-			matrix = new dv_massiv;
+			matrix = new _usualMatr;
 			switch(outm)
 			{
 				case 1:
@@ -253,7 +265,7 @@ matr* matr::In(ifstream& ifst)
 		}
 		case 3:
 		{
-			matrix = new triangle_matr;
+			matrix = new _triangleMatr;
 			switch(outm)
 			{
 				case 1:
@@ -275,12 +287,14 @@ matr* matr::In(ifstream& ifst)
 			break;
 		}
 		default:
+		{
 			return 0;
+		}
 	}
-	matrix->Read(ifst);
+	matrix->Read(inFile);
 	return matrix;
 }
-container::container() 
+_container::_container()
 {
 	cont = NULL;
     next = NULL; // указатель на следующий узел
@@ -289,13 +303,13 @@ container::container()
 }
 
  //  Очистка контейнера от элементов (освобождение памяти)
-void container:: Clear() 
+void _container:: Clear()
 {
-	container *cur = this;
+	_container *cur = this;
 	cur = cur->next;
-	while (cur!=NULL) //Пока по адресу на начало списка что-то есть
+	while (cur != NULL) //Пока по адресу на начало списка что-то есть
     {
-		container *temp = cur->prev ;
+		_container *temp = cur->prev ;
 		temp->next = cur->next;
 		delete cur; // освобождаем память удаляемого элемента
 		cur = temp;
@@ -305,22 +319,22 @@ void container:: Clear()
     next = NULL; // указатель на следующий узел
     prev = NULL; // указатель на предыдущий узел 
 }
-void container::In(ifstream &ifst)
+void _container::In(ifstream &inFile)
 {
-	len = checkNumber(ifst, len);
+	len = CheckNumber(inFile, len);
 	if (len < 0)
     {
         cout << "Wrong count of elements ( must be > 0)!!!" << endl;
         exit(1);
     }
-	container *cur = this;
-	for(int i = 0; i <len; i++)
+	_container *cur = this;
+	for(int i = 0; i < len; i++)
 	{
-		matr *matrix;
-		if((matrix = matr::In(ifst))!=0)
+		_matr *matrix;
+		if((matrix = _matr::In(inFile))!=0)
 		{
-			container *temp, *p;
-			temp = new container;
+			_container *temp, *p;
+			temp = new _container;
 			p = cur->next; // сохранение указателя на следующий узел
 			cur->next = temp; // предыдущий узел указывает на создаваемый
 			temp->cont = matrix;
@@ -335,67 +349,69 @@ void container::In(ifstream &ifst)
 	this->next = cur->next;
 	this->prev = cur->prev;
 }
-void container::Out(ofstream &ofst)
+void _container::Out(ofstream &outFile)
 {
-	ofst << "Container contains " << len << " elements." << endl;
-	container *p = this;
+	outFile << "Container contains " << len << " elements." << endl;
+	_container *p = this;
 	for( int i = 0; i < len-1; i++)
 			p = p ->prev;
 	int schet = 1;
 	while((p != NULL)&&(len!=0))
 	{
-		ofst << schet << ": " <<endl;
+		outFile << schet << ": " <<endl;
 		switch(p->cont->outm)
 		{
 			case LINE_BY_LINE:
 			{
-				ofst << "It is line by line method of output" << endl;
+				outFile << "It is line by line method of output" << endl;
 				break;
 			}
 			case BY_COLUMN:
 			{
-				ofst << "It is method of output by columns" << endl;
+				outFile << "It is method of output by columns" << endl;
 				break;
 			}
 			case ONE_MASSIV:
 			{
-				ofst << "It is method of output in shape of one-dimensional massiv" << endl;
+				outFile << "It is method of output in shape of one-dimensional massiv" << endl;
 				break;
 			}
 			default:
 			{
-				ofst << "It is incorrect way of output matrix!" <<endl;
+				outFile << "It is incorrect way of output matrix!" <<endl;
 				break;
 			}
 		}
-		p->cont->Write(ofst); // вывод значения элемента p
+		p->cont->Write(outFile); // вывод значения элемента p
 		int sum = p->cont->Sum ();
-		ofst << "Sum of elements = " << sum << endl;
+		outFile << "Sum of elements = " << sum << endl;
 		p = p->next; // переход к следующему узлу
 		schet++; 
 	} 
 }
-bool matr::Compare(matr *next)
+bool _matr::Compare(_matr *next)
 {
 	int s = Sum();
 	int sk = next->Sum();
-	return (s>sk);
+	return (s > sk);
 }
-void container :: Sort()
+void _container :: Sort()
 {
-	container *p= this;
+	_container *p= this;
 	bool flag;
 	do
 	{
 		flag = false;
 		for( int i = 0; i < len-1; i++)
-				p = p ->prev;
+		{
+			p = p ->prev;
+		}
 		while (p->next != NULL)
 		{
-			matr *one;
+			_matr *one;
 			one = p->cont;
 			p = p->next;
-			matr *two;
+			_matr *two;
 			two = p->cont;
 			bool k = one->Compare(two);
 			if (k == true)
@@ -406,25 +422,29 @@ void container :: Sort()
 				flag = true;
 			}
 			else
+			{
 				p = p->prev;
+			}
 			p = p->next; // переход к следующему узлу
 		}
 	} while (flag);
 }
-void container::OutFirst(ofstream &ofst)
+void _container::OutFirst(ofstream &outFile)
 {
-	container *p = this;
+	_container *p = this;
 	for( int i = 0; i < len-1; i++)
-			p = p ->prev;
-	int schet = 0;
-	while((p != NULL)&&(len!=0))
 	{
-		p->cont->WriteFirst(ofst); // вывод значения элемента p
+		p = p ->prev;
+	}
+	int schet = 0;
+	while((p != NULL) && (len != 0))
+	{
+		p->cont->WriteFirst(outFile); // вывод значения элемента p
 		p = p->next; // переход к следующему узлу
 		schet++;
 	} 
 }
-void matr ::WriteFirst(ofstream &ofst) 
+void _matr ::WriteFirst(ofstream &outFile)
 {
-	ofst << endl;  // пустая строка
+	outFile << endl;  // пустая строка
 }
