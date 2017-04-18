@@ -448,3 +448,72 @@ void _matr ::WriteFirst(ofstream &outFile)
 {
 	outFile << endl;  // пустая строка
 }
+void _container::Multimethod(ofstream &outFile)
+{
+	_container *temp1 = this;
+	_container *temp2 = this;
+	for( int i = 0; i < len-1; i++)
+			temp1 = temp1 ->prev;
+	outFile << "--------------------------------------" << endl;
+	while((temp1 != NULL)&&(len!=0))
+	{
+		temp2 = temp1->next;
+		while(temp2 != NULL)
+		{
+			temp1->cont->Multimethod(temp2->cont, outFile);
+			temp1->cont->Write(outFile);
+			temp2->cont->Write(outFile);
+			outFile << "--------------------------------------" << endl;
+			temp2 = temp2->next;
+		}
+		temp1 = temp1->next;
+	}
+}
+void _usualMatr :: Multimethod(_matr* mas, ofstream &outFile)
+{
+	mas->CheckWithUsual(outFile);
+}
+void _diagonalMatr :: Multimethod(_matr* mas, ofstream &outFile)
+{
+	mas->CheckWithDiagonal(outFile);
+}
+void _triangleMatr :: Multimethod(_matr* mas, ofstream &outFile)
+{
+	mas->CheckWithTriangle(outFile);
+}
+void _usualMatr :: CheckWithUsual(ofstream &outFile)
+{
+	outFile << "Usual matrix and usual matrix:" << endl;
+}
+void _diagonalMatr :: CheckWithUsual(ofstream &outFile)
+{
+	outFile << "Usual matrix and diagonal matrix:" << endl;
+}
+void _triangleMatr :: CheckWithUsual(ofstream &outFile)
+{
+	outFile << "Usual matrix and triangle matrix:" << endl;
+}
+void _usualMatr :: CheckWithDiagonal(ofstream &outFile)
+{
+	outFile << "Diagonal matrix and usual matrix:" << endl;
+}
+void _diagonalMatr :: CheckWithDiagonal(ofstream &outFile)
+{
+	outFile << "Diagonal matrix and diagonal matrix:" << endl;
+}
+void _triangleMatr :: CheckWithDiagonal(ofstream &outFile)
+{
+	outFile << "Diagonal matrix and triangle matrix:" << endl;
+}
+void _usualMatr :: CheckWithTriangle(ofstream &outFile)
+{
+	outFile << "Triangle matrix and usual matrix:" << endl;
+}
+void _diagonalMatr :: CheckWithTriangle(ofstream &outFile)
+{
+	outFile << "Triangle matrix and diagonal matrix:" << endl;
+}
+void _triangleMatr :: CheckWithTriangle(ofstream &outFile)
+{
+	outFile << "Triangle matrix and triangle matrix:" << endl;
+}

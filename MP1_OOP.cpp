@@ -32,6 +32,8 @@ int main(int argc, char *argv[])
 	cont.Out(outFile);
 	outFile << "Only usual matrix. " << endl;
 	cont.OutFirst(outFile);
+	outFile << "Multimethod " << endl;
+	cont.Multimethod(outFile);
 	cont.Clear();
 	outFile << "Empty container. " << endl;
 	cont.Out(outFile);

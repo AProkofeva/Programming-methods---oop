@@ -14,6 +14,10 @@ class _matr
 		virtual int Sum() = 0;
 		bool Compare (_matr *next);
 		virtual void WriteFirst(ofstream &outFile) = 0;
+		virtual void Multimethod(_matr* mas, ofstream &outFile) = 0;
+		virtual void CheckWithUsual(ofstream &outFile) = 0;
+		virtual void CheckWithDiagonal(ofstream &outFile) = 0;
+		virtual void CheckWithTriangle(ofstream &outFile) = 0;
 };
 class _usualMatr: public _matr
 {
@@ -25,6 +29,10 @@ class _usualMatr: public _matr
 		void Write(ofstream &outFile);
 		int Sum ();
 		void WriteFirst(ofstream &outFile);
+		void Multimethod(_matr* mas, ofstream &outFile);
+		void CheckWithUsual(ofstream &outFile);
+		void CheckWithDiagonal(ofstream &outFile);
+		void CheckWithTriangle(ofstream &outFile);
 		_usualMatr() {};
 };
 class _diagonalMatr: public _matr
@@ -37,6 +45,10 @@ class _diagonalMatr: public _matr
 		void Write(ofstream &outFile);
 		int Sum ();
 		void WriteFirst(ofstream &outFile);
+		void Multimethod(_matr* mas, ofstream &outFile);
+		void CheckWithUsual(ofstream &outFile);
+		void CheckWithDiagonal(ofstream &outFile);
+		void CheckWithTriangle(ofstream &outFile);
 		_diagonalMatr() {};
  };
 class _triangleMatr: public _matr
@@ -49,6 +61,10 @@ class _triangleMatr: public _matr
 		void Write(ofstream &outFile);
 		int Sum ();
 		void WriteFirst(ofstream &outFile);
+		void Multimethod(_matr* mas, ofstream &outFile);
+		void CheckWithUsual(ofstream &outFile);
+		void CheckWithDiagonal(ofstream &outFile);
+		void CheckWithTriangle(ofstream &outFile);
 		_triangleMatr() {};
  };
 class _container
@@ -63,6 +79,7 @@ class _container
 		void Out(ofstream &outFile);    // вывод
 		void Sort();
 		void OutFirst(ofstream &outFile);
+		void Multimethod(ofstream &outFile);
 		void Clear();  // очистка контейнера от фигур
 		_container();    // инициализация контейнера
 		~_container() {Clear();} // утилизация контейнера
