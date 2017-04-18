@@ -26,15 +26,6 @@ void diagonal_matr :: Read(ifstream &ifst)
 		ifst >> A[i];
 	}
 }
-void triangle_matr :: Read(ifstream &ifst) 
-{
-	ifst >> n;
-	A = new int [n];
-	for( int i = 0; i < n; i++)
-	{
-		ifst >> A[i];
-	}
-}
 void dv_massiv :: Write(ofstream &ofst)
 {
 	ofst << "It is a usual square matrix! Number of rows (columns) = " << n << endl << "Matrix:" << endl;
@@ -58,24 +49,6 @@ void diagonal_matr :: Write (ofstream &ofst)
 		ofst << endl;
 	}
 }
-void triangle_matr :: Write (ofstream &ofst)
-{
-	int len = (-1+ sqrt(float(1+8*n)))/2;
-	ofst << "It is low triangle matrix! Number of rows (columns) = " << len << endl << "Matrix:" << endl;
-	int k = 0;
-	for (int i = 0; i < len; i++)
-	{
-		for (int j = 0; j < len; j++)
-			if (i >= j)
-			{
-				ofst << A[k] << '\t';
-				k++;
-			}
-			else
-				ofst << "0\t";
-		ofst << endl;
-	}
-}
 matr* matr::In(ifstream& ifst)
 {
 	matr *matrix;
@@ -92,11 +65,6 @@ matr* matr::In(ifstream& ifst)
 		case 2:
 		{
 			matrix = new dv_massiv;
-			break;
-		}
-		case 3:
-		{
-			matrix = new triangle_matr;
 			break;
 		}
 		default:
@@ -168,4 +136,49 @@ void container::Out(ofstream &ofst)
 		p->cont->Write(ofst); // вывод значения элемента p
 		p = p->next; // переход к следующему узлу
 	} 
+}
+void container::Multimethod(ofstream &ofst)
+{
+	container *temp1 = this;
+	container *temp2 = this;
+	for( int i = 0; i < len-1; i++)
+			temp1 = temp1 ->prev;
+	ofst << "--------------------------------------" << endl;
+	while((temp1 != NULL)&&(len!=0))
+	{
+		temp2 = temp1->next;
+		while(temp2 != NULL)
+		{
+			temp1->cont->Multimethod(temp2->cont, ofst);
+			temp1->cont->Write(ofst); 
+			temp2->cont->Write(ofst);
+			ofst << "--------------------------------------" << endl;
+			temp2 = temp2->next;
+		}
+		temp1 = temp1->next;
+	} 
+}
+void dv_massiv :: Multimethod(matr* mas, ofstream &ofst)
+{
+	mas->CheckWithUsual(ofst);
+}
+void diagonal_matr :: Multimethod(matr* mas, ofstream &ofst)
+{
+	mas->CheckWithDiagonal(ofst);
+}
+void dv_massiv :: CheckWithUsual(ofstream &ofst)
+{
+	ofst << "Usual matrix and usual matrix:" << endl;
+}
+void diagonal_matr :: CheckWithUsual(ofstream &ofst)
+{
+	ofst << "Usual matrix and diagonal matrix:" << endl;
+}
+void dv_massiv :: CheckWithDiagonal(ofstream &ofst)
+{
+	ofst << "Diagonal matrix and usual matrix:" << endl;
+}
+void diagonal_matr :: CheckWithDiagonal(ofstream &ofst)
+{
+	ofst << "Diagonal matrix and diagonal matrix:" << endl;
 }

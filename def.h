@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
-#include <cmath>
 using namespace std;
 class matr 
 {
@@ -9,6 +8,9 @@ public:
     static  matr* In(ifstream &ifst);	   
     virtual void Read(ifstream &ifst) = 0;  // ввод
     virtual void Write(ofstream &ofst) = 0;     // вывод
+	virtual void Multimethod(matr* mas, ofstream &ofst) = 0;
+	virtual void CheckWithUsual(ofstream &ofst) = 0;
+	virtual void CheckWithDiagonal(ofstream &ofst) = 0;
 };
 class dv_massiv: public matr 
 {
@@ -18,9 +20,12 @@ private:
 public:
 	void Read(ifstream &ifst);
 	void Write(ofstream &ofst);
+	void Multimethod(matr* mas, ofstream &ofst);
+	void CheckWithUsual(ofstream &ofst);
+	void CheckWithDiagonal(ofstream &ofst);
 	dv_massiv() {};
 };
-class diagonal_matr: public matr
+struct diagonal_matr: public matr
 {
 private:
 	int n;
@@ -28,17 +33,10 @@ private:
 public:
 	void Read(ifstream &ifst);
 	void Write(ofstream &ofst);
+	void Multimethod(matr* mas, ofstream &ofst);
+	void CheckWithUsual(ofstream &ofst);
+	void CheckWithDiagonal(ofstream &ofst);
 	diagonal_matr() {};
- };
-class triangle_matr: public matr
-{
-private:
-	int n;
-	int *A; 
-public:
-	void Read(ifstream &ifst);
-	void Write(ofstream &ofst);
-	triangle_matr() {};
  };
 class container
 {
@@ -51,7 +49,8 @@ private:
 public:
 	void In(ifstream &ifst);     // ввод 
     void Out(ofstream &ofst);    // вывод 
-    void Clear();  // очистка контейнера от фигур
+    void Clear();  // очистка контейнера
+	void Multimethod(ofstream &ofst);
     container();    // инициализация контейнера
     ~container() {Clear();} // утилизация контейнера
 };
