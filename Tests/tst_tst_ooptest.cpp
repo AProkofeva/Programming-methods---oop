@@ -57,11 +57,8 @@ void Tst_oopTest::testMas()
     QFETCH(int, size);
     QFETCH(int, first);
     QFETCH(int, expected);
-    //matr *m;
-    //m = new matr;
-    dv_massiv *mas;
-    mas = new dv_massiv;
-    //mas->key =USUAL;
+	_usualMatr *mas;
+	mas = new _usualMatr;
     mas->n = size;
     mas->A = new int*[mas->n];
     for (int i = 0; i <mas->n; ++i)
@@ -100,21 +97,16 @@ void Tst_oopTest::testDiagonal()
     QFETCH(int, size);
     QFETCH(int, first);
     QFETCH(int, expected);
-   // matr *m;
-   // m = new matr;
-    diagonal_matr *mas;
-    mas = new diagonal_matr;
-   // mas->key = DIAGONAL;
+	_diagonalMatr *mas;
+	mas = new _diagonalMatr;
     mas->n = size;
     mas->A = new int[mas->n];
     int k = 0;
     for (int i = 0; i <mas->n; ++i)
     {
-        mas->A[i] = first + k;//mas2[i][j];
+		mas->A[i] = first + k;
         k++;
     }
-    //m = (matr*)mas;
-    //int actual =Sum(m);
     int actual = mas->Sum();
     QCOMPARE(actual, expected);
 }
@@ -136,21 +128,17 @@ void Tst_oopTest::testTriangle()
     QFETCH(int, size);
     QFETCH(int, first);
     QFETCH(int, expected);
-    //matr *m;
-    //m = new matr;
-    triangle_matr *mas;
-    mas = new triangle_matr;
+	_triangleMatr *mas;
+	mas = new _triangleMatr;
     //mas->key = TRIANGLE;
     mas->n = size;
     mas->A = new int[mas->n];
     int k = 0;
     for (int i = 0; i <mas->n; ++i)
     {
-        mas->A[i] = first + k;//mas2[i][j];
+		mas->A[i] = first + k;
         k++;
     }
-    //m = (matr*)mas;
-    //int actual =Sum(m);
     int actual = mas->Sum();
     QCOMPARE(actual, expected);
 }
@@ -171,15 +159,15 @@ void Tst_oopTest::testCompare()
     QFETCH(int, size_diagonal);
     QFETCH(int, size_triangle);
     QFETCH(bool, expected);
-    matr * matrM;
-    matr * matrT;
-    matr * matrD;
-    dv_massiv *square;
-    square = new dv_massiv;
-    diagonal_matr *diag;
-    diag = new diagonal_matr;
-    triangle_matr *tri;
-    tri = new triangle_matr;
+	_matr * matrM;
+	_matr * matrT;
+	_matr * matrD;
+	_usualMatr *square;
+	square = new _usualMatr;
+	_diagonalMatr *diag;
+	diag = new _diagonalMatr;
+	_triangleMatr *tri;
+	tri = new _triangleMatr;
 
     square->n = size_usual;
     square->A = new int*[square->n];
@@ -206,9 +194,9 @@ void Tst_oopTest::testCompare()
     {
         diag->A[i] = 1;
     }
-    matrM = (matr*)square;
-    matrT = (matr*)tri;
-    matrD = (matr*)diag;
+	matrM = (_matr*)square;
+	matrT = (_matr*)tri;
+	matrD = (_matr*)diag;
     bool actual =  matrM->Compare(matrT);
     QCOMPARE(actual, expected);
     bool actual2 =  matrM->Compare(matrM);
@@ -220,29 +208,29 @@ void Tst_oopTest::testCompare()
 }
 void Tst_oopTest::testInit()
 {
-    container c;
+	_container c;
     int actualLen = c.len;
     int expectedLen = 0;
     QCOMPARE(actualLen, expectedLen);
-    matr* actual = c.cont;
-    matr* expected = NULL;
+	_matr* actual = c.cont;
+	_matr* expected = NULL;
     QCOMPARE(actual, expected);
-    container* actual1 = c.prev;
-    container* expected1 = NULL;
+	_container* actual1 = c.prev;
+	_container* expected1 = NULL;
     QCOMPARE(actual1, expected1);
-    container* actual2 = c.next;
-    container* expected2 = NULL;
+	_container* actual2 = c.next;
+	_container* expected2 = NULL;
     QCOMPARE(actual2, expected2);
 }
 void Tst_oopTest::testInDiagonal()
 {
     FILE *fp = fopen("in_diagonal.txt","r");
     ifstream ifst(fp);
-    matr * temp = matr::In(ifst);
-    diagonal_matr *actualHead;
-    actualHead = (diagonal_matr*)temp;
-    diagonal_matr *expectedHead;
-    expectedHead = new diagonal_matr;
+	_matr * temp = _matr::In(ifst);
+	_diagonalMatr *actualHead;
+	actualHead = (_diagonalMatr*)temp;
+	_diagonalMatr *expectedHead;
+	expectedHead = new _diagonalMatr;
     expectedHead->n = 3;
     expectedHead->A = new int[expectedHead->n];
     int mas2[3] = {4, 3, 5};
@@ -260,11 +248,11 @@ void Tst_oopTest::testInMas()
 {
     FILE *fp = fopen("in_mas.txt","r");
     ifstream ifst(fp);
-    matr * temp = matr::In(ifst);
-    dv_massiv *actualHead;
-    actualHead = (dv_massiv*)temp;
-    dv_massiv *expectedHead;
-    expectedHead = new dv_massiv;
+	_matr * temp = _matr::In(ifst);
+	_usualMatr *actualHead;
+	actualHead = (_usualMatr*)temp;
+	_usualMatr *expectedHead;
+	expectedHead = new _usualMatr;
     expectedHead->n = 3;
     expectedHead->A = new int*[expectedHead->n];
     for (int i = 0; i < expectedHead->n; i++)
@@ -294,11 +282,11 @@ void Tst_oopTest::testInTriangle()
 {
     FILE *fp = fopen("in_triangle.txt","r");
     ifstream ifst(fp);
-    matr * temp = matr::In(ifst);
-    triangle_matr *actualHead;
-    actualHead = (triangle_matr*)temp;
-    triangle_matr *expectedHead;
-    expectedHead = new triangle_matr;
+	_matr * temp = _matr::In(ifst);
+	_triangleMatr *actualHead;
+	actualHead = (_triangleMatr*)temp;
+	_triangleMatr *expectedHead;
+	expectedHead = new _triangleMatr;
     expectedHead->n = 6;
     expectedHead->A = new int[expectedHead->n];
     int mas2[6] = {1, 2, 3, 4, 5, 6};
@@ -314,15 +302,15 @@ void Tst_oopTest::testInTriangle()
 }
 void Tst_oopTest::testIn()
 {
-    container *c;
-    c = new container;
+	_container *c;
+	c = new _container;
     FILE *fp = fopen("in1.txt","r");
     ifstream ifst(fp);
     c->In(ifst);
     int actuallen = c->len;
     int expectedlen = 5;
     QCOMPARE(actuallen, expectedlen);
-    container *p;
+	_container *p;
     p = c;
     output expected[5] = {LINE_BY_LINE, BY_COLUMN, ONE_MASSIV,ONE_MASSIV,ONE_MASSIV};
     for( int i = 0; i < actuallen-1; i++)
@@ -330,7 +318,7 @@ void Tst_oopTest::testIn()
     int count = 0;
     while (p != NULL)
     {
-        matr* actual = p->cont;
+		_matr* actual = p->cont;
         QCOMPARE(actual->outm, expected[count]);
         count++;
         p = p->next;
@@ -339,29 +327,29 @@ void Tst_oopTest::testIn()
 }
 void Tst_oopTest::testInEmpty()
 {
-    container *c;
-    c = new container;
+	_container *c;
+	c = new _container;
     FILE *fp = fopen("in_empty.txt","r");
     ifstream ifst(fp);
     c->In(ifst);
     int actuallen = c->len;
     int expectedlen = 0;
     QCOMPARE(actuallen, expectedlen);
-    matr* actual = c->cont;
-    matr* expected = NULL;
+	_matr* actual = c->cont;
+	_matr* expected = NULL;
     QCOMPARE(actual, expected);
-    container* actual1 = c->prev;
-    container* expected1 = NULL;
+	_container* actual1 = c->prev;
+	_container* expected1 = NULL;
     QCOMPARE(actual1, expected1);
-    container* actual2 = c->next;
-    container* expected2 = NULL;
+	_container* actual2 = c->next;
+	_container* expected2 = NULL;
     QCOMPARE(actual2, expected2);
     fclose(fp);
 }
 void Tst_oopTest::testInOne()
 {
-    container *c;
-    c = new container;
+	_container *c;
+	c = new _container;
     FILE *fp = fopen("in_one.txt","r");
     ifstream ifst(fp);
     c->In(ifst);
@@ -369,13 +357,13 @@ void Tst_oopTest::testInOne()
     int expectedlen = 1;
     QCOMPARE(actuallen, expectedlen);
     output expected = BY_COLUMN;
-    matr* actual = c->cont;
+	_matr* actual = c->cont;
     QCOMPARE(actual->outm, expected);
     fclose(fp);
 }
 void Tst_oopTest::testOut()
 {
-    container c;
+	_container c;
     FILE *fp = fopen("in.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("out.txt","w");
@@ -401,7 +389,7 @@ void Tst_oopTest::testOut()
 }
 void Tst_oopTest::testOne()
 {
-    container c;
+	_container c;
     FILE *fp = fopen("in_one.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("out1.txt","w");
@@ -427,7 +415,7 @@ void Tst_oopTest::testOne()
 }
 void Tst_oopTest::testEmpty()
 {
-    container c;
+	_container c;
     FILE *fp = fopen("in_empty.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("outemp.txt","w");
@@ -453,7 +441,7 @@ void Tst_oopTest::testEmpty()
 }
 void Tst_oopTest::sortEmpty()
 {
-    container c;
+	_container c;
     FILE *fp = fopen("in_empty.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("sortemp.txt","w");
@@ -480,7 +468,7 @@ void Tst_oopTest::sortEmpty()
 }
 void Tst_oopTest::sortOne()
 {
-    container c;
+	_container c;
     FILE *fp = fopen("in_one.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("sortone.txt","w");
@@ -507,7 +495,7 @@ void Tst_oopTest::sortOne()
 }
 void Tst_oopTest::sortList()
 {
-    container c;
+	_container c;
     FILE *fp = fopen("in.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("sort_usual.txt","w");
@@ -534,7 +522,7 @@ void Tst_oopTest::sortList()
 }
 void Tst_oopTest::sortAssorted()
 {
-    container c;
+	_container c;
     FILE *fp = fopen("in_assort.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("sort_assort.txt","w");
@@ -561,7 +549,7 @@ void Tst_oopTest::sortAssorted()
 }
 void Tst_oopTest::sortSort()
 {
-    container c;
+	_container c;
     FILE *fp = fopen("in2.txt","r");
     ifstream ifst(fp);
     FILE *fn = fopen("sort_sort.txt","w");
@@ -588,7 +576,7 @@ void Tst_oopTest::sortSort()
 }
 void Tst_oopTest::testClear()
 {
-    container c;
+	_container c;
     FILE *fp = fopen("in2.txt","r");
     ifstream ifst(fp);
     c.In(ifst);
@@ -596,14 +584,14 @@ void Tst_oopTest::testClear()
     int actualLen = c.len;
     int expectedLen = 0;
     QCOMPARE(actualLen, expectedLen);
-    matr* actual = c.cont;
-    matr* expected = NULL;
+	_matr* actual = c.cont;
+	_matr* expected = NULL;
     QCOMPARE(actual, expected);
-    container* actual1 = c.prev;
-    container* expected1 = NULL;
+	_container* actual1 = c.prev;
+	_container* expected1 = NULL;
     QCOMPARE(actual1, expected1);
-    container* actual2 = c.next;
-    container* expected2 = NULL;
+	_container* actual2 = c.next;
+	_container* expected2 = NULL;
     QCOMPARE(actual2, expected2);
 }
 QTEST_APPLESS_MAIN(Tst_oopTest)
