@@ -300,6 +300,9 @@ _container::_container() : cont(NULL),  next(NULL), prev(NULL), len(0)
 
 }
 
+//Container::Container() : head(NULL), tail(NULL), len(0)
+
+
 void _container:: Clear()
 {
     _container *cur = this;

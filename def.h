@@ -86,7 +86,7 @@ class _container
 };
 void CheckIn(ifstream &inFile);
 void CheckOut(ofstream &outFile);
-int CheckNumber(ifstream &inFile, int number);
+int CheckNumber(ifstream &inFile);
 void CheckType(int number);
 void CheckSize(int size);
 void CheckTriangleSize(int size);

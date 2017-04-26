@@ -1,10 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <iostream>
 #include <fstream>
 #include "def.h"
 
-using namespace std;
+//using namespace std;
 
 int main(int argc, char *argv[])
 {
@@ -15,12 +13,12 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	ifstream inFile(argv[1]);
-	ofstream outFile(argv[2]);
 	//FILE *fp = fopen("in.txt","r");
 	//ifstream inFile(fp);
 	//FILE *fn = fopen("out.txt","w");
 	//ofstream outFile(fn);
 	CheckIn(inFile);
+    ofstream outFile(argv[2]);
 	CheckOut(outFile);
 	cout << "Start"<< endl;
 	_container cont; //= new _container;
@@ -37,6 +35,8 @@ int main(int argc, char *argv[])
 	cont.Clear();
 	outFile << "Empty container. " << endl;
 	cont.Out(outFile);
+    inFile.close();
+    outFile.close();
 	cout << "Stop"<< endl;
 	return 0;
 }
